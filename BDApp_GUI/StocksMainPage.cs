@@ -11,18 +11,18 @@ namespace BDApp_GUI
 
         private void buttonStock_Click(object sender, EventArgs e)
         {
-            refreshDataGrid();
+            StockIndex sIndex = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+            refreshDataGrid(sIndex);
         }
 
         private void StocksMainPage_Load(object sender, EventArgs e)
         {
-            refreshDataGrid();
+            comboBoxIndexes.SelectedIndex = 0;
         }
 
-        private void refreshDataGrid()
+        private void refreshDataGrid(StockIndex sIndex)
         {
-            StockIndex cac40 = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
-            List<float> liste = cac40.getPricesFromBoursier();
+            List<float> liste = sIndex.getPricesFromBoursier();
             dataGridViewStocks.Columns.Clear();
             dataGridViewPortfolio.Columns.Clear();
             dataGridViewStocks.Columns.Add("Nom", "Nom");
@@ -65,6 +65,22 @@ namespace BDApp_GUI
                 }
             }
             labelPortfolio.Text = valeurPortefeuille.ToString()+" EUR";
+        }
+
+        private void comboBoxIndexes_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBox cbb = sender as ComboBox;
+            switch (cbb.SelectedItem.ToString())
+            {
+                case "CAC40":
+                    StockIndex sIndex = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+                    refreshDataGrid(sIndex);
+                    break;
+                case "SBF120":
+                    StockIndex sbf120 = new StockIndex("SBF120", new string[] { "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-2.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-3.html" });
+                    refreshDataGrid(sbf120);
+                    break;
+            }        
         }
     }
 }

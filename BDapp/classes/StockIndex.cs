@@ -11,9 +11,10 @@ namespace BDapp.classes
     {
         private string IndexName;
         private string Url;
-        private Stock Stocks;
+        private string[] Urls;
+        private Stock[] Stocks;
 
-        public StockIndex(string indexName, string url, Stock stock)
+        public StockIndex(string indexName, string url, Stock[] stock)
         {
             this.IndexName = indexName;
             this.Url = url;
@@ -26,12 +27,37 @@ namespace BDapp.classes
             this.Url = url;
         }
 
+        public StockIndex(string indexName, string[] urls)
+        {
+            this.IndexName = indexName;
+            this.Urls = urls;
+        }
+
         public List<float> getPricesFromBoursier()
         {
             try
             {
-                string htmlPage = HTMLHandler.downloadSourcePage(this.Url);
-                return extractFromBouriser(htmlPage);
+                if (this.Url != null)
+                {
+                    string htmlPage = HTMLHandler.downloadSourcePage(this.Url);
+                    return extractFromBoursier(htmlPage);
+                }
+                else if (this.Urls != null)
+                {
+                    List<float> listOfSeveralPages = new List<float>();
+                    foreach (string url in this.Urls)
+                    {
+                        string htmlPage = HTMLHandler.downloadSourcePage(url);
+                        List<float> listOfOnePage = extractFromBoursier(htmlPage);
+                        foreach (float value in listOfOnePage)
+                        {
+                            listOfSeveralPages.Add(value);
+                        }
+                    }
+                    return listOfSeveralPages;
+                }
+                else
+                    return null;
             }
             catch (Exception ex)
             {
@@ -39,7 +65,7 @@ namespace BDapp.classes
             }
         }
 
-        private List<float> extractFromBouriser(string htmlPage)
+        private List<float> extractFromBoursier(string htmlPage)
         {
             try
             {
@@ -56,9 +82,10 @@ namespace BDapp.classes
                 }
 
                 tag = "<tr>";
-                for (int i = 1; i <= 40; i++)
+                string[] splitter = htmlPage.Split(tag);
+                for (int i = 1; i <= splitter.Count() - 1; i++)
                 {
-                    string temp = htmlPage.Split(tag)[i];
+                    string temp = splitter[i];
                     temp = temp.Split("</a></td><tdclass=\"tr\">")[1];
                     temp = temp.Split("€</td>")[0];
                     dicCac40.Add(float.Parse(temp));

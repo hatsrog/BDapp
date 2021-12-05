@@ -4,12 +4,15 @@ using BDapp.classes;
 Console.WriteLine("Prix en temps réel de quelques actions...");
 
 StockIndex cac40 = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
-List<float> liste = cac40.getPricesFromBoursier();
+List<float> cac = cac40.getPricesFromBoursier();
 
-StockOwnership stock_alstom = new StockOwnership("Alstom", liste[(int)StockName.ENUM_NAME.ALSTOM], 0);
-StockOwnership stock_orange = new StockOwnership("Orange", liste[(int)StockName.ENUM_NAME.ORANGE], 0);
+StockIndex sbf120 = new StockIndex("SBF120", new string[]{"https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-2.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-3.html"});
+List<float> sbf = sbf120.getPricesFromBoursier();
+
+StockOwnership stock_alstom = new StockOwnership("Alstom", cac[(int)StockName.ENUM_NAME.ALSTOM], 0);
+StockOwnership stock_orange = new StockOwnership("Orange", cac[(int)StockName.ENUM_NAME.ORANGE], 0);
 StockOwnership stock_hrs = new StockOwnership("HRS", 0, "https://investir.lesechos.fr/cours/action-hydrogen-refueling,xpar,alhrs,fr0014001pm5,isin.html");
-StockOwnership stock_vinci = new StockOwnership("Vinci", liste[(int)StockName.ENUM_NAME.VINCI], 0);
+StockOwnership stock_vinci = new StockOwnership("Vinci", cac[(int)StockName.ENUM_NAME.VINCI], 0);
 StockOwnership stock_bayer = new StockOwnership("Bayer", 0, "https://investir.lesechos.fr/cours/action-bayer-ag,xetr,de000bay0017,bay001,wkn.html");
 StockOwnership etf_sp500 = new StockOwnership("ETF S&P 500", 0, "https://investir.lesechos.fr/cours/tracker-amundi-etf-pea-s&p-500-ucits-etf-eur,xpar,pe500,fr0013412285,isin.html");
 StockOwnership etf_world = new StockOwnership("ETF MSCI World", 0, "https://investir.lesechos.fr/cours/tracker-amundi-msci-world-ucits-etf-eur,xpar,cw8,lu1681043599,isin.html");
@@ -32,8 +35,8 @@ foreach(Stock stock in arrayStocks)
 }
 Console.WriteLine("******\n{0} EUR", valeurPortefeuille);
 
-float alstom = liste[(int)StockName.ENUM_NAME.ALSTOM];
-float worldline = liste[(int)StockName.ENUM_NAME.WORLDLINE];
-float lvmh = liste[(int)StockName.ENUM_NAME.LVMH];
+float alstom = cac[(int)StockName.ENUM_NAME.ALSTOM];
+float worldline = cac[(int)StockName.ENUM_NAME.WORLDLINE];
+float lvmh = cac[(int)StockName.ENUM_NAME.LVMH];
 
 Console.ReadLine();
