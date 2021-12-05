@@ -20,30 +20,34 @@ namespace BDapp.classes
             this.Price = price;
         }
 
-        public string GetStockName
+        public string _StockName
         {
             get
                 { return this.StockName; }
+            set
+                { this.StockName = value; }
         }
 
-        public float GetStockPrice
+        public float _StockPrice
         {
             get
-            { return this.Price; }
+                { return this.Price; }
+            set 
+                { this.Price = value; }
         }
 
         public float getPrice()
         {
             try
             {
-                if (GetStockPrice == 0)
+                if (_StockPrice == 0)
                 {
                     string htmlPage = HTMLHandler.downloadSourcePage(this.Url);
                     return float.Parse(extract(htmlPage));
                 }
                 else
                 {
-                    return GetStockPrice;
+                    return _StockPrice;
                 }
             }
             catch(Exception ex)

@@ -33,7 +33,7 @@ namespace BDapp.classes
             this.Urls = urls;
         }
 
-        public List<float> getPricesFromBoursier()
+        public List<Stock> getPricesFromBoursier()
         {
             try
             {
@@ -44,12 +44,12 @@ namespace BDapp.classes
                 }
                 else if (this.Urls != null)
                 {
-                    List<float> listOfSeveralPages = new List<float>();
+                    List<Stock> listOfSeveralPages = new List<Stock>();
                     foreach (string url in this.Urls)
                     {
                         string htmlPage = HTMLHandler.downloadSourcePage(url);
-                        List<float> listOfOnePage = extractFromBoursier(htmlPage);
-                        foreach (float value in listOfOnePage)
+                        List<Stock> listOfOnePage = extractFromBoursier(htmlPage);
+                        foreach (Stock value in listOfOnePage)
                         {
                             listOfSeveralPages.Add(value);
                         }
@@ -65,33 +65,46 @@ namespace BDapp.classes
             }
         }
 
-        private List<float> extractFromBoursier(string htmlPage)
+        private List<Stock> extractFromBoursier(string htmlPage)
         {
             try
             {
-                List<float> dicCac40 = new List<float>();
+                List<Stock> arrStocks = new List<Stock>();
                 string tag = "<tbody>";
                 htmlPage = htmlPage.Split(tag)[1];
                 tag = "</tbody>";
                 htmlPage = htmlPage.Split(tag)[0];
 
-                List<char> charsToRemove = new List<char>() { '\n', '\t', '\r', ' ' };
+                List<char> charsToRemove = new List<char>() { '\n', '\t', '\r', ' '};
                 foreach (char c in charsToRemove)
                 {
                     htmlPage = htmlPage.Replace(c.ToString(), String.Empty);
                 }
 
+                // Name
+                tag = "name--wrapper";
+                string[] splitterName = htmlPage.Split("name--wrapper");
+
+                // Price
                 tag = "<tr>";
-                string[] splitter = htmlPage.Split(tag);
-                for (int i = 1; i <= splitter.Count() - 1; i++)
+                string[] splitterPrice = htmlPage.Split(tag);
+                for (int i = 1; i <= splitterPrice.Count() - 1; i++)
                 {
-                    string temp = splitter[i];
+                    string temp = splitterPrice[i];
                     temp = temp.Split("</a></td><tdclass=\"tr\">")[1];
-                    temp = temp.Split("€</td>")[0];
-                    dicCac40.Add(float.Parse(temp));
+                    string tempPrice = temp.Split("€</td>")[0];
+
+                    temp = splitterName[i];
+                    temp = temp.Split(">")[1];
+                    string tempName = temp.Split("</a")[0];
+
+                    Stock oStock = new Stock(null, 0f);
+                    oStock._StockPrice = float.Parse(tempPrice);
+                    oStock._StockName = tempName;
+                    arrStocks.Add(oStock);
                 }
 
-                return dicCac40;
+                return arrStocks;
             }
             catch (Exception ex)
             {

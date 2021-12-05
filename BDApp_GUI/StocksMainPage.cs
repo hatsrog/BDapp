@@ -11,8 +11,17 @@ namespace BDApp_GUI
 
         private void buttonStock_Click(object sender, EventArgs e)
         {
-            StockIndex sIndex = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
-            refreshDataGrid(sIndex);
+            switch (comboBoxIndexes.SelectedItem.ToString())
+            {
+                case "CAC40":
+                    StockIndex sIndex = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+                    refreshDataGrid(sIndex);
+                    break;
+                case "SBF120":
+                    StockIndex sbf120 = new StockIndex("SBF120", new string[] { "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-2.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-3.html" });
+                    refreshDataGrid(sbf120);
+                    break;
+            }
         }
 
         private void StocksMainPage_Load(object sender, EventArgs e)
@@ -22,7 +31,7 @@ namespace BDApp_GUI
 
         private void refreshDataGrid(StockIndex sIndex)
         {
-            List<float> liste = sIndex.getPricesFromBoursier();
+            List<Stock> liste = sIndex.getPricesFromBoursier();
             dataGridViewStocks.Columns.Clear();
             dataGridViewPortfolio.Columns.Clear();
             dataGridViewStocks.Columns.Add("Nom", "Nom");
@@ -31,18 +40,18 @@ namespace BDApp_GUI
             dataGridViewPortfolio.Columns.Add("Nombre", "Nombre");
             int index = 0;
 
-            foreach (float price in liste)
+            foreach (Stock value in liste)
             {
-                string[] row = { StockName.name[index], price.ToString() };
+                string[] row = { value._StockName, value._StockPrice.ToString() };
                 dataGridViewStocks.Rows.Add(row);
                 index++;
             }
             labelTimeUpdate.Text = "Mis à jour : " + DateTime.Now.ToString();
 
-            StockOwnership stock_alstom = new StockOwnership("Alstom", liste[(int)StockName.ENUM_NAME.ALSTOM], 10);
-            StockOwnership stock_orange = new StockOwnership("Orange", liste[(int)StockName.ENUM_NAME.ORANGE], 10);
+            StockOwnership stock_alstom = new StockOwnership("ALSTOM", liste.FirstOrDefault(Name => Name._StockName == "ALSTOM")._StockPrice, 10);
+            StockOwnership stock_orange = new StockOwnership("ORANGE", liste.FirstOrDefault(Name => Name._StockName == "ORANGE")._StockPrice, 10);
             StockOwnership stock_hrs = new StockOwnership("HRS", 10, "https://investir.lesechos.fr/cours/action-hydrogen-refueling,xpar,alhrs,fr0014001pm5,isin.html");
-            StockOwnership stock_vinci = new StockOwnership("Vinci", liste[(int)StockName.ENUM_NAME.VINCI], 10);
+            StockOwnership stock_vinci = new StockOwnership("Vinci", liste.FirstOrDefault(Name => Name._StockName == "VINCI")._StockPrice, 10);
             StockOwnership stock_bayer = new StockOwnership("Bayer", 10, "https://investir.lesechos.fr/cours/action-bayer-ag,xetr,de000bay0017,bay001,wkn.html");
             StockOwnership etf_sp500 = new StockOwnership("ETF S&P 500", 1000, "https://investir.lesechos.fr/cours/tracker-amundi-etf-pea-s&p-500-ucits-etf-eur,xpar,pe500,fr0013412285,isin.html");
             StockOwnership etf_world = new StockOwnership("ETF MSCI World", 10, "https://investir.lesechos.fr/cours/tracker-amundi-msci-world-ucits-etf-eur,xpar,cw8,lu1681043599,isin.html");
@@ -54,12 +63,11 @@ namespace BDApp_GUI
 
             foreach (Stock stock in arrayStocks)
             {
-                float stockPrice = 0f;
-                stockPrice = stock.getPrice();
+                float stockPrice = stock.getPrice();
                 if (stock is StockOwnership)
                 {
                     StockOwnership sohip = (StockOwnership)stock;
-                    string[] row = { stock.GetStockName, sohip.GetQuantity.ToString() };
+                    string[] row = { stock._StockName, sohip.GetQuantity.ToString() };
                     valeurPortefeuille += sohip.GetQuantity * stockPrice;
                     dataGridViewPortfolio.Rows.Add(row);
                 }
