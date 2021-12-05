@@ -12,14 +12,6 @@ namespace BDapp.classes
         private string IndexName;
         private string Url;
         private string[] Urls;
-        private Stock[] Stocks;
-
-        public StockIndex(string indexName, string url, Stock[] stock)
-        {
-            this.IndexName = indexName;
-            this.Url = url;
-            this.Stocks = stock;
-        }
 
         public StockIndex(string indexName, string url)
         {
