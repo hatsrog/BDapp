@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "BDapp_Core/1.0.0": {
+        "runtime": {
+          "BDapp_Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BDapp_Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -4,10 +4,10 @@ using BDapp.classes;
 Console.WriteLine("Prix en temps réel de quelques actions...");
 
 StockIndex cac40 = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
-List<Stock> liste = cac40.getPricesFromBoursier();
+List<Stock> liste = cac40.getStocksFromBoursier();
 
 StockIndex sbf120 = new StockIndex("SBF120", new string[]{"https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-2.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-3.html"});
-List<Stock> sbf = sbf120.getPricesFromBoursier();
+List<Stock> sbf = sbf120.getStocksFromBoursier();
 
 StockOwnership stock_alstom;
 StockOwnership stock_orange;

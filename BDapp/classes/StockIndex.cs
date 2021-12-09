@@ -25,7 +25,7 @@ namespace BDapp.classes
             this.Urls = urls;
         }
 
-        public List<Stock> getPricesFromBoursier()
+        public List<Stock> getStocksFromBoursier()
         {
             try
             {
@@ -53,7 +53,7 @@ namespace BDapp.classes
             }
             catch (Exception ex)
             {
-                return getPricesFromBoursier();
+                return getStocksFromBoursier();
             }
         }
 
