@@ -42,7 +42,7 @@ namespace BDapp.classes
             {
                 if (_StockPrice == 0)
                 {
-                    string htmlPage = HTMLHandler.downloadSourcePage(this.Url);
+                    string htmlPage = HTMLHandler.DownloadSourcePage(this.Url);
                     return float.Parse(extract(htmlPage));
                 }
                 else

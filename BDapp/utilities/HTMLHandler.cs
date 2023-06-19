@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace BDapp.utilities
 {
@@ -13,10 +8,10 @@ namespace BDapp.utilities
         /// Téléchargement de la page web
         /// </summary>
         /// <returns></returns>
-        public static string downloadSourcePage(string url)
+        public static string DownloadSourcePage(string url)
         {
-            string htmlPage = null;
-            using (WebClient client = new WebClient())
+            string? htmlPage;
+            using (var client = new WebClient())
             {
                 htmlPage = client.DownloadString(url);
             }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using BDapp_API.Models;
 using BDapp.classes;
+using BDapp_Core.Enums;
 
 namespace BDapp_API.Controllers
 {
@@ -18,27 +19,41 @@ namespace BDapp_API.Controllers
 
         private async void AddStock(int id, Stock stock)
         {
-            StockModel stockModel = new StockModel();
-            stockModel.id = id;
-            stockModel.stockName = stock._StockName;
-            stockModel.stockPrice = stock.getPrice();
+            var stockModel = new StockModel
+            {
+                id = id,
+                stockName = stock._StockName,
+                stockPrice = stock.getPrice()
+            };
 
             _context.Entry(stockModel).State = EntityState.Added;
             await _context.SaveChangesAsync();
         }
 
         // GET: api/cac40
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<StockModel>>> GetCAC40Stocks()
+        [HttpGet("/api/{indice}")]
+        public async Task<ActionResult<IEnumerable<StockModel>>> GetStocksOfIndice(string indice)
         {
             _context.stockModels.RemoveRange(_context.stockModels);
-            StockIndex stockIndex = new StockIndex("https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
-            List<Stock> listStock = stockIndex.GetStocksFromBoursier();
-            int i = 1;
-            foreach (Stock stock in listStock)
+            var getValue = StockIndex.GetIndiceValue(indice);
+            if(!string.IsNullOrWhiteSpace(getValue))
             {
-                AddStock(i, stock);
-                i++;
+                var stockIndex = new StockIndex();
+                if (getValue.Contains("||"))
+                {
+                    stockIndex = new StockIndex(getValue.Split("||"));
+                }
+                else
+                {
+                    stockIndex = new StockIndex(getValue);
+                }
+                var listStock = stockIndex.GetStocksFromBoursier();
+                int i = 1;
+                listStock.ForEach(stock =>
+                {
+                    AddStock(i, stock);
+                    i++;
+                });
             }
             return await _context.stockModels.ToListAsync();
         }

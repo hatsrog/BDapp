@@ -1,10 +1,16 @@
 ﻿using BDapp.utilities;
+using BDapp_Core.Enums;
+
 namespace BDapp.classes
 {
     public class StockIndex
     {
         private readonly string Url;
         private readonly string[] Urls;
+
+        public StockIndex()
+        {
+        }
 
         public StockIndex(string url)
         {
@@ -16,13 +22,27 @@ namespace BDapp.classes
             Urls = urls;
         }
 
+        public static string GetIndiceValue(string indice)
+        {
+            switch (indice.ToUpper())
+            {
+                case "CAC40":
+                    return Indice.CAC40;
+                case "SBF120":
+                    return Indice.SBF120;
+                default:
+                    return Indice.UNKNOWN;
+
+            }
+        }
+
         public List<Stock>? GetStocksFromBoursier()
         {
             try
             {
                 if (Url != null)
                 {
-                    string htmlPage = HTMLHandler.downloadSourcePage(this.Url);
+                    string htmlPage = HTMLHandler.DownloadSourcePage(this.Url);
                     return ExtractFromBoursier(htmlPage);
                 }
                 else if (Urls != null)
@@ -30,7 +50,7 @@ namespace BDapp.classes
                     var listOfSeveralPages = new List<Stock>();
                     foreach (string url in Urls)
                     {
-                        string htmlPage = HTMLHandler.downloadSourcePage(url);
+                        string htmlPage = HTMLHandler.DownloadSourcePage(url);
                         List<Stock> listOfOnePage = ExtractFromBoursier(htmlPage);
                         foreach (Stock value in listOfOnePage)
                         {
