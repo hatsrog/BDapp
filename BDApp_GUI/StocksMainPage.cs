@@ -31,7 +31,7 @@ namespace BDApp_GUI
 
         private void refreshDataGrid(StockIndex sIndex)
         {
-            List<Stock> liste = sIndex.getStocksFromBoursier();
+            List<Stock> liste = sIndex.GetStocksFromBoursier();
             dataGridViewStocks.Columns.Clear();
             dataGridViewPortfolio.Columns.Clear();
             dataGridViewStocks.Columns.Add("Nom", "Nom");

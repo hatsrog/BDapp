@@ -32,8 +32,8 @@ namespace BDapp_API.Controllers
         public async Task<ActionResult<IEnumerable<StockModel>>> GetCAC40Stocks()
         {
             _context.stockModels.RemoveRange(_context.stockModels);
-            StockIndex stockIndex = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
-            List<Stock> listStock = stockIndex.getStocksFromBoursier();
+            StockIndex stockIndex = new StockIndex("https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+            List<Stock> listStock = stockIndex.GetStocksFromBoursier();
             int i = 1;
             foreach (Stock stock in listStock)
             {
@@ -49,8 +49,8 @@ namespace BDapp_API.Controllers
         {
             stockName = stockName.ToUpper();
             _context.stockModels.RemoveRange(_context.stockModels);
-            StockIndex stockIndex = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
-            List<Stock> listStock = stockIndex.getStocksFromBoursier();
+            StockIndex stockIndex = new StockIndex("https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+            List<Stock> listStock = stockIndex.GetStocksFromBoursier();
             int i = 1;
             foreach (Stock stock in listStock)
             {
