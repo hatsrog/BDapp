@@ -5,8 +5,8 @@ namespace BDapp.classes
 {
     public class StockIndex
     {
-        private readonly string Url;
-        private readonly string[] Urls;
+        private readonly string Url = string.Empty;
+        private readonly string[] Urls = Array.Empty<string>();
 
         public StockIndex()
         {
@@ -40,18 +40,18 @@ namespace BDapp.classes
         {
             try
             {
-                if (Url != null)
+                if (!string.IsNullOrWhiteSpace(Url))
                 {
-                    string htmlPage = HTMLHandler.DownloadSourcePage(this.Url);
-                    return ExtractFromBoursier(htmlPage);
+                    var htmlPage = HTMLHandler.DownloadSourcePage(this.Url);
+                    return ExtractFromBoursier(htmlPage.Result);
                 }
-                else if (Urls != null)
+                else if (Urls.Length > 0)
                 {
                     var listOfSeveralPages = new List<Stock>();
                     foreach (string url in Urls)
                     {
-                        string htmlPage = HTMLHandler.DownloadSourcePage(url);
-                        List<Stock> listOfOnePage = ExtractFromBoursier(htmlPage);
+                        var htmlPage = HTMLHandler.DownloadSourcePage(url);
+                        List<Stock> listOfOnePage = ExtractFromBoursier(htmlPage.Result);
                         foreach (Stock value in listOfOnePage)
                         {
                             listOfSeveralPages.Add(value);
@@ -79,7 +79,7 @@ namespace BDapp.classes
             var charsToRemove = new List<char>() { '\n', '\t', '\r', ' ' };
             foreach (char c in charsToRemove)
             {
-                htmlPage = htmlPage.Replace(c.ToString(), String.Empty);
+                htmlPage = htmlPage.Replace(c.ToString(), string.Empty);
             }
 
             // Name

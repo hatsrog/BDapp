@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using BDapp_API.Models;
 using BDapp.classes;
-using BDapp_Core.Enums;
 
 namespace BDapp_API.Controllers
 {
@@ -49,7 +48,7 @@ namespace BDapp_API.Controllers
                 }
                 var listStock = stockIndex.GetStocksFromBoursier();
                 int i = 1;
-                listStock.ForEach(stock =>
+                listStock?.ForEach(stock =>
                 {
                     AddStock(i, stock);
                     i++;
@@ -64,14 +63,14 @@ namespace BDapp_API.Controllers
         {
             stockName = stockName.ToUpper();
             _context.stockModels.RemoveRange(_context.stockModels);
-            StockIndex stockIndex = new StockIndex("https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
-            List<Stock> listStock = stockIndex.GetStocksFromBoursier();
+            var stockIndex = new StockIndex("https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+            var listStock = stockIndex.GetStocksFromBoursier();
             int i = 1;
-            foreach (Stock stock in listStock)
+            listStock?.ForEach(stock =>
             {
                 AddStock(i, stock);
                 i++;
-            }
+            });
 
             var stockModel = await _context.stockModels.SingleOrDefaultAsync(StockName => StockName.stockName == stockName);
 

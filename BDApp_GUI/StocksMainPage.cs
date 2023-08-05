@@ -14,11 +14,11 @@ namespace BDApp_GUI
             switch (comboBoxIndexes.SelectedItem.ToString())
             {
                 case "CAC40":
-                    StockIndex sIndex = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+                    StockIndex sIndex = new StockIndex("https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
                     refreshDataGrid(sIndex);
                     break;
                 case "SBF120":
-                    StockIndex sbf120 = new StockIndex("SBF120", new string[] { "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-2.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-3.html" });
+                    StockIndex sbf120 = new StockIndex(new string[] { "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-2.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-3.html" });
                     refreshDataGrid(sbf120);
                     break;
             }
@@ -102,11 +102,11 @@ namespace BDApp_GUI
             switch (cbb.SelectedItem.ToString())
             {
                 case "CAC40":
-                    StockIndex sIndex = new StockIndex("CAC40", "https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+                    StockIndex sIndex = new StockIndex("https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
                     refreshDataGrid(sIndex);
                     break;
                 case "SBF120":
-                    StockIndex sbf120 = new StockIndex("SBF120", new string[] { "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-2.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-3.html" });
+                    StockIndex sbf120 = new StockIndex(new string[] { "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-2.html", "https://www.boursier.com/indices/composition/sbf-120-FR0003999481,FR-3.html" });
                     refreshDataGrid(sbf120);
                     break;
             }        
