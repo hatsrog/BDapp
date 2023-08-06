@@ -14,7 +14,14 @@ namespace BDapp.classes
 
         public StockIndex(string url)
         {
-            Url = url;
+            if(url.Contains("||"))
+            {
+                Urls = url.Split("||");
+            }
+            else
+            {
+                Url = url;
+            }
         }
 
         public StockIndex(string[] urls)
@@ -60,7 +67,9 @@ namespace BDapp.classes
                     return listOfSeveralPages;
                 }
                 else
+                {
                     return null;
+                }
             }
             catch (Exception)
             {

@@ -5,7 +5,6 @@ using BDapp.classes;
 
 namespace BDapp_API.Controllers
 {
-    [Route("api/cac40")]
     [ApiController]
     public class StockModelsController : ControllerBase
     {
@@ -16,16 +15,19 @@ namespace BDapp_API.Controllers
             _context = context;
         }
 
-        private async void AddStock(int id, Stock stock)
+        private async void AddStock(List<Stock>? stocks)
         {
-            var stockModel = new StockModel
+            var id = 0;
+            stocks?.ForEach(stock =>
             {
-                id = id,
-                stockName = stock._StockName,
-                stockPrice = stock.getPrice()
-            };
-
-            _context.Entry(stockModel).State = EntityState.Added;
+                var stockModel = new StockModel
+                {
+                    id = ++id,
+                    stockName = stock._StockName,
+                    stockPrice = stock.getPrice()
+                };
+                _context.Entry(stockModel).State = EntityState.Added;
+            });
             await _context.SaveChangesAsync();
         }
 
@@ -34,52 +36,27 @@ namespace BDapp_API.Controllers
         public async Task<ActionResult<IEnumerable<StockModel>>> GetStocksOfIndice(string indice)
         {
             _context.stockModels.RemoveRange(_context.stockModels);
-            var getValue = StockIndex.GetIndiceValue(indice);
-            if(!string.IsNullOrWhiteSpace(getValue))
+            var indiceValue = StockIndex.GetIndiceValue(indice);
+            if(!string.IsNullOrWhiteSpace(indiceValue))
             {
-                var stockIndex = new StockIndex();
-                if (getValue.Contains("||"))
-                {
-                    stockIndex = new StockIndex(getValue.Split("||"));
-                }
-                else
-                {
-                    stockIndex = new StockIndex(getValue);
-                }
+                var stockIndex = new StockIndex(indiceValue);
                 var listStock = stockIndex.GetStocksFromBoursier();
-                int i = 1;
-                listStock?.ForEach(stock =>
-                {
-                    AddStock(i, stock);
-                    i++;
-                });
+                AddStock(listStock);
             }
             return await _context.stockModels.ToListAsync();
         }
 
         // GET: api/cac40/AIRLIQUIDE
-        [HttpGet("{stockName}")]
-        public async Task<ActionResult<StockModel>> GetCAC40Stock(string stockName)
+        [HttpGet("/api/{indice}/{stockName}")]
+        public async Task<ActionResult<StockModel>> GetStockFromIndice(string indice, string stockName)
         {
             stockName = stockName.ToUpper();
             _context.stockModels.RemoveRange(_context.stockModels);
-            var stockIndex = new StockIndex("https://www.boursier.com/indices/composition/cac-40-FR0003500008,FR.html");
+            var stockIndex = new StockIndex(StockIndex.GetIndiceValue(indice));
             var listStock = stockIndex.GetStocksFromBoursier();
-            int i = 1;
-            listStock?.ForEach(stock =>
-            {
-                AddStock(i, stock);
-                i++;
-            });
+            var stockFounded = await _context.stockModels.SingleOrDefaultAsync(stock => stock.stockName == stockName);
 
-            var stockModel = await _context.stockModels.SingleOrDefaultAsync(StockName => StockName.stockName == stockName);
-
-            if (stockModel == null)
-            {
-                return NotFound();
-            }
-
-            return stockModel;
+            return stockFounded != null ? stockFounded : NotFound();
         }
     }
 }
