@@ -34,9 +34,13 @@ namespace BDapp.classes
             switch (indice.ToUpper())
             {
                 case "CAC40":
+                case "CAC":
                     return Indice.CAC40;
                 case "SBF120":
+                case "SBF":
                     return Indice.SBF120;
+                case "NASDAQ100":
+                    return Indice.NASDAQ100;
                 default:
                     return Indice.UNKNOWN;
 
@@ -49,7 +53,7 @@ namespace BDapp.classes
             {
                 if (!string.IsNullOrWhiteSpace(Url))
                 {
-                    var htmlPage = HTMLHandler.DownloadSourcePage(this.Url);
+                    var htmlPage = HTMLHandler.DownloadSourcePage(Url);
                     return ExtractFromBoursier(htmlPage.Result);
                 }
                 else if (Urls.Length > 0)
@@ -77,6 +81,19 @@ namespace BDapp.classes
             }
         }
 
+        private string ExtractCurrency(string raw)
+        {
+            if(raw.Contains("€"))
+            {
+                return "€";
+            }
+            else if(raw.Contains("$"))
+            {
+                return "$";
+            }
+            return string.Empty;
+        }
+
         private List<Stock> ExtractFromBoursier(string htmlPage)
         {
             var arrStocks = new List<Stock>();
@@ -101,14 +118,15 @@ namespace BDapp.classes
             {
                 var temp = splitterPrice[i];
                 temp = temp.Split("</a></td><tdclass=\"tr\">")[1];
-                var tempPrice = temp.Split("€</td>")[0];
+                var tempPrice = temp.Split($"{ExtractCurrency(temp)}</td>")[0];
 
                 temp = splitterName[i];
                 temp = temp.Split(">")[1];
                 var tempName = temp.Split("</a")[0];
 
-                var oStock = new Stock(null, 0f);
-                oStock._StockPrice = float.Parse(tempPrice);
+                var oStock = new Stock(string.Empty, 0f);
+                float.TryParse(tempPrice, out float priceParser);
+                oStock._StockPrice = priceParser;
                 oStock._StockName = tempName;
                 arrStocks.Add(oStock);
             }

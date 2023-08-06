@@ -24,7 +24,7 @@ namespace BDapp_API.Controllers
                 {
                     id = ++id,
                     stockName = stock._StockName,
-                    stockPrice = stock.getPrice()
+                    stockPrice = stock._StockPrice
                 };
                 _context.Entry(stockModel).State = EntityState.Added;
             });
