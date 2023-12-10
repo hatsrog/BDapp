@@ -8,10 +8,6 @@ namespace BDapp.classes
         private readonly string Url = string.Empty;
         private readonly string[] Urls = Array.Empty<string>();
 
-        public StockIndex()
-        {
-        }
-
         public StockIndex(string url)
         {
             if(url.Contains("||"))

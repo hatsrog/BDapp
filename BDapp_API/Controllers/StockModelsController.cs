@@ -13,6 +13,7 @@ namespace BDapp_API.Controllers
         public StockModelsController(StockContext context)
         {
             _context = context;
+            _context.stockModels.RemoveRange(_context.stockModels);
         }
 
         private async void AddStock(List<Stock>? stocks)
@@ -35,7 +36,6 @@ namespace BDapp_API.Controllers
         [HttpGet("/api/{indice}")]
         public async Task<ActionResult<IEnumerable<StockModel>>> GetStocksOfIndice(string indice)
         {
-            _context.stockModels.RemoveRange(_context.stockModels);
             var indiceValue = StockIndex.GetIndiceValue(indice);
             if(!string.IsNullOrWhiteSpace(indiceValue))
             {
@@ -51,7 +51,6 @@ namespace BDapp_API.Controllers
         public async Task<ActionResult<StockModel>> GetStockFromIndice(string indice, string stockName)
         {
             stockName = stockName.ToUpper();
-            _context.stockModels.RemoveRange(_context.stockModels);
             var stockIndex = new StockIndex(StockIndex.GetIndiceValue(indice));
             var listStock = stockIndex.GetStocksFromBoursier();
             var stockFounded = await _context.stockModels.SingleOrDefaultAsync(stock => stock.stockName == stockName);

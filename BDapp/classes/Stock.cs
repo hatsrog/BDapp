@@ -50,7 +50,7 @@ namespace BDapp.classes
                     return _StockPrice;
                 }
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 return getPrice();
             }
@@ -78,9 +78,9 @@ namespace BDapp.classes
                 }
                 return htmlPage;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                return null;
+                return string.Empty;
             }
         }
     }
