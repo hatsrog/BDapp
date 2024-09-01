@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ew5+WHpEK26RJxg3yvsha4oJD35ZmmA0rhuLdGVEbo/zkPPwuYlaNwvQD+1wU4jKWa8MKNOOsxY9Kr5S+/KuUQ==",
+  "dgSpecHash": "Bk5VE6Hbmb8=",
   "success": true,
   "projectFilePath": "C:\\Users\\Sebas\\Desktop\\Projets\\BDapp\\BDapp_API\\BDapp_API.csproj",
   "expectedPackageFiles": [
@@ -192,40 +192,40 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Le package 'Microsoft.AspNet.WebApi.Client 4.0.20710' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' au lieu du framework cible du projet 'net6.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "message": "Le package 'Microsoft.AspNet.WebApi.Client 4.0.20710' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' au lieu du framework cible du projet 'net8.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
       "libraryId": "Microsoft.AspNet.WebApi.Client",
       "targetGraphs": [
-        "net6.0"
+        "net8.0"
       ]
     },
     {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Le package 'Microsoft.AspNet.WebApi.Core 4.0.20710' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' au lieu du framework cible du projet 'net6.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "message": "Le package 'Microsoft.AspNet.WebApi.Core 4.0.20710' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' au lieu du framework cible du projet 'net8.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
       "libraryId": "Microsoft.AspNet.WebApi.Core",
       "targetGraphs": [
-        "net6.0"
+        "net8.0"
       ]
     },
     {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Le package 'Microsoft.Net.Http 2.0.20710' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' au lieu du framework cible du projet 'net6.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "message": "Le package 'Microsoft.Net.Http 2.0.20710' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' au lieu du framework cible du projet 'net8.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
       "libraryId": "Microsoft.Net.Http",
       "targetGraphs": [
-        "net6.0"
+        "net8.0"
       ]
     },
     {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Le package 'Swashbuckle.Core 5.6.0' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' au lieu du framework cible du projet 'net6.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "message": "Le package 'Swashbuckle.Core 5.6.0' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' au lieu du framework cible du projet 'net8.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
       "libraryId": "Swashbuckle.Core",
       "targetGraphs": [
-        "net6.0"
+        "net8.0"
       ]
     }
   ]

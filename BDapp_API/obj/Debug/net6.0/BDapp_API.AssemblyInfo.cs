@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BDapp_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0c2460cfa9bd0fded6eca217b20af838876f07b")]
 [assembly: System.Reflection.AssemblyProductAttribute("BDapp_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BDapp_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
