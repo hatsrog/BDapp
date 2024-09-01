@@ -43,7 +43,7 @@ namespace BDapp.classes
             }
         }
 
-        public List<Stock>? GetStocksFromBoursier()
+        public List<StockInfo>? GetStocksFromBoursier()
         {
             try
             {
@@ -54,12 +54,12 @@ namespace BDapp.classes
                 }
                 else if (Urls.Length > 0)
                 {
-                    var listOfSeveralPages = new List<Stock>();
+                    var listOfSeveralPages = new List<StockInfo>();
                     foreach (string url in Urls)
                     {
                         var htmlPage = HTMLHandler.DownloadSourcePage(url);
-                        List<Stock> listOfOnePage = ExtractFromBoursier(htmlPage.Result);
-                        foreach (Stock value in listOfOnePage)
+                        List<StockInfo> listOfOnePage = ExtractFromBoursier(htmlPage.Result);
+                        foreach (StockInfo value in listOfOnePage)
                         {
                             listOfSeveralPages.Add(value);
                         }
@@ -90,9 +90,9 @@ namespace BDapp.classes
             return string.Empty;
         }
 
-        private List<Stock> ExtractFromBoursier(string htmlPage)
+        private List<StockInfo> ExtractFromBoursier(string htmlPage)
         {
-            var arrStocks = new List<Stock>();
+            var arrStocks = new List<StockInfo>();
             var tag = "<tbody>";
             htmlPage = htmlPage.Split(tag)[1];
             tag = "</tbody>";
@@ -120,7 +120,7 @@ namespace BDapp.classes
                 temp = temp.Split(">")[1];
                 var tempName = temp.Split("</a")[0];
 
-                var oStock = new Stock(string.Empty, 0f);
+                var oStock = new StockInfo(string.Empty, 0f);
                 float.TryParse(tempPrice, out float priceParser);
                 oStock._StockPrice = priceParser;
                 oStock._StockName = tempName;

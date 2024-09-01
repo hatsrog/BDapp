@@ -2,21 +2,21 @@
 using Microsoft.EntityFrameworkCore;
 using BDapp_API.Models;
 using BDapp.classes;
+using BDapp_API.DbModels;
 
 namespace BDapp_API.Controllers
 {
     [ApiController]
     public class StockModelsController : ControllerBase
     {
-        private readonly StockContext _context;
+        private readonly BdappContext _context;
 
-        public StockModelsController(StockContext context)
+        public StockModelsController(BdappContext context)
         {
             _context = context;
-            _context.stockModels.RemoveRange(_context.stockModels);
         }
 
-        private async void AddStock(List<Stock>? stocks)
+        private async void AddStock(List<StockInfo>? stocks)
         {
             var id = 0;
             stocks?.ForEach(stock =>
@@ -36,6 +36,10 @@ namespace BDapp_API.Controllers
         [HttpGet("/api/{indice}")]
         public async Task<ActionResult<IEnumerable<StockModel>>> GetStocksOfIndice(string indice)
         {
+            var stocks = _context.Stocks.Where(m => m.Market.Name == indice)
+                .Include(i => i.Market)
+                .ToList();
+
             var indiceValue = StockIndex.GetIndiceValue(indice);
             if(!string.IsNullOrWhiteSpace(indiceValue))
             {

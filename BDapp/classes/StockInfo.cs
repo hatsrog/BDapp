@@ -2,19 +2,19 @@
 
 namespace BDapp.classes
 {
-    public class Stock
+    public class StockInfo
     {
         private string StockName;
         private string Url = string.Empty;
         private float Price;
         
-        public Stock(string stockName, string url)
+        public StockInfo(string stockName, string url)
         {
             StockName = stockName;
             Url = url;
         }
 
-        public Stock(string stockName, float price)
+        public StockInfo(string stockName, float price)
         {
             StockName = stockName;
             Price = price;

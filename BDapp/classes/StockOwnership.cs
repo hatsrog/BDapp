@@ -1,6 +1,6 @@
 ﻿namespace BDapp.classes
 {
-    public class StockOwnership : Stock
+    public class StockOwnership : StockInfo
     {
         private string? StockName;
         private string? Url;
