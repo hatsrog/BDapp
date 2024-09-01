@@ -1,4 +1,6 @@
-﻿namespace BDapp.classes
+﻿using BDapp_Core.Classes;
+
+namespace BDapp.classes
 {
     public class StockOwnership : StockInfo
     {

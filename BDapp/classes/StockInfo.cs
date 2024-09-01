@@ -1,59 +1,40 @@
 ﻿using BDapp.utilities;
 
-namespace BDapp.classes
+namespace BDapp_Core.Classes
 {
     public class StockInfo
     {
-        private string StockName;
+        private string Name;
         private string Url = string.Empty;
         private float Price;
-        
+        private ICollection<StockPrice> Prices;
+
         public StockInfo(string stockName, string url)
         {
-            StockName = stockName;
+            Name = stockName;
             Url = url;
         }
 
         public StockInfo(string stockName, float price)
         {
-            StockName = stockName;
+            Name = stockName;
             Price = price;
         }
 
-        public string _StockName
+        public string StockName
         {
             get
-                { return StockName; }
+            { return StockName; }
             set
-                { StockName = value; }
+            { StockName = value; }
         }
 
-        public float _StockPrice
+        public float StockPrice
         {
             get
-                { return Price; }
-            set 
-                { Price = value; }
-        }
-
-        public float getPrice()
-        {
-            try
-            {
-                if (_StockPrice == 0)
-                {
-                    var htmlPage = HTMLHandler.DownloadSourcePage(Url);
-                    return float.Parse(Extract(htmlPage.Result));
-                }
-                else
-                {
-                    return _StockPrice;
-                }
-            }
-            catch (Exception)
-            {
-                return getPrice();
-            }
+            { return Price; }
+            set
+            { Price = value; }
         }
 
         /// <summary>
@@ -78,7 +59,7 @@ namespace BDapp.classes
                 }
                 return htmlPage;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return string.Empty;
             }

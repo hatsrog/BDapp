@@ -1,4 +1,5 @@
-﻿using BDapp_API.Models;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace BDapp_API.DbModels;
@@ -13,8 +14,6 @@ public partial class BdappContext : DbContext
         : base(options)
     {
     }
-
-    public DbSet<StockModel> stockModels { get; set; } = null!;
 
     public virtual DbSet<Market> Markets { get; set; }
 
@@ -43,9 +42,11 @@ public partial class BdappContext : DbContext
             entity.ToTable("prices");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Date).HasColumnName("date");
-            entity.Property(e => e.PriceValue).HasColumnName("priceValue");
+            entity.Property(e => e.Date)
+                .HasColumnType("datetime")
+                .HasColumnName("date");
             entity.Property(e => e.StockId).HasColumnName("stockId");
+            entity.Property(e => e.StockPrice).HasColumnName("stockPrice");
 
             entity.HasOne(d => d.Stock).WithMany(p => p.Prices)
                 .HasForeignKey(d => d.StockId)

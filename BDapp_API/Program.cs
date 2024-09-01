@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using BDapp_API.DbModels;
+using BDapp_API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<BdappContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BDappDatabase"));
 });
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 

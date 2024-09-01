@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BDapp_API.Models;
-using BDapp.classes;
 using BDapp_API.DbModels;
+using BDapp_Core.Classes;
+using AutoMapper;
 
 namespace BDapp_API.Controllers
 {
@@ -10,10 +11,12 @@ namespace BDapp_API.Controllers
     public class StockModelsController : ControllerBase
     {
         private readonly BdappContext _context;
+        private readonly IMapper _mapper;
 
-        public StockModelsController(BdappContext context)
+        public StockModelsController(BdappContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         private async void AddStock(List<StockInfo>? stocks)
@@ -24,8 +27,8 @@ namespace BDapp_API.Controllers
                 var stockModel = new StockModel
                 {
                     id = ++id,
-                    stockName = stock._StockName,
-                    stockPrice = stock._StockPrice
+                    stockName = stock.StockName,
+                    stockPrice = stock.StockPrice
                 };
                 _context.Entry(stockModel).State = EntityState.Added;
             });
@@ -34,32 +37,27 @@ namespace BDapp_API.Controllers
 
         // GET: api/cac40
         [HttpGet("/api/{indice}")]
-        public async Task<ActionResult<IEnumerable<StockModel>>> GetStocksOfIndice(string indice)
+        public async Task<List<StockInformation>> GetStocksOfIndice(string indice)
         {
-            var stocks = _context.Stocks.Where(m => m.Market.Name == indice)
-                .Include(i => i.Market)
-                .ToList();
-
-            var indiceValue = StockIndex.GetIndiceValue(indice);
-            if(!string.IsNullOrWhiteSpace(indiceValue))
+            var stocks = await _context.Stocks.Where(m => m.Market.Name == indice)
+                .ToListAsync();
+            stocks.ForEach(stock =>
             {
-                var stockIndex = new StockIndex(indiceValue);
-                var listStock = stockIndex.GetStocksFromBoursier();
-                AddStock(listStock);
-            }
-            return await _context.stockModels.ToListAsync();
+                stock.Prices = [.. _context.Prices.Where(price => price.StockId == stock.Id)];
+            });
+
+            return _mapper.Map<List<StockInformation>>(stocks);
         }
 
-        // GET: api/cac40/AIRLIQUIDE
+        // GET: api/cac40/AIR LIQUIDE
         [HttpGet("/api/{indice}/{stockName}")]
-        public async Task<ActionResult<StockModel>> GetStockFromIndice(string indice, string stockName)
+        public async Task<StockInformation> GetStockFromIndice(string indice, string stockName)
         {
-            stockName = stockName.ToUpper();
-            var stockIndex = new StockIndex(StockIndex.GetIndiceValue(indice));
-            var listStock = stockIndex.GetStocksFromBoursier();
-            var stockFounded = await _context.stockModels.SingleOrDefaultAsync(stock => stock.stockName == stockName);
+            var stock = _context.Stocks.Where(m => m.Market.Name == indice && m.Name == stockName).SingleOrDefault();
+            if(stock != null)
+                stock.Prices = [.. _context.Prices.Where(price => price.StockId == stock.Id)];
 
-            return stockFounded != null ? stockFounded : NotFound();
+            return _mapper.Map<StockInformation>(stock);
         }
     }
 }

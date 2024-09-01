@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "280R9PCT7uQ=",
+  "dgSpecHash": "/5LY8Smg4KE=",
   "success": true,
   "projectFilePath": "C:\\Users\\Sebas\\Desktop\\Projets\\BDapp\\BDapp_API\\BDapp_API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Sebas\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Sebas\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Sebas\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\Sebas\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",

@@ -1,4 +1,5 @@
 ﻿using BDapp.utilities;
+using BDapp_Core.Classes;
 using BDapp_Core.Enums;
 
 namespace BDapp.classes
@@ -122,8 +123,8 @@ namespace BDapp.classes
 
                 var oStock = new StockInfo(string.Empty, 0f);
                 float.TryParse(tempPrice, out float priceParser);
-                oStock._StockPrice = priceParser;
-                oStock._StockName = tempName;
+                oStock.StockPrice = priceParser;
+                oStock.StockName = tempName;
                 arrStocks.Add(oStock);
             }
 

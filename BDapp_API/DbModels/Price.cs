@@ -9,9 +9,9 @@ public partial class Price
 
     public long StockId { get; set; }
 
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
 
-    public double PriceValue { get; set; }
+    public double StockPrice { get; set; }
 
     public virtual Stock Stock { get; set; } = null!;
 }

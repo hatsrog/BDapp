@@ -1,4 +1,7 @@
-﻿namespace BDapp_API.DbModels;
+﻿using System;
+using System.Collections.Generic;
+
+namespace BDapp_API.DbModels;
 
 public partial class Market
 {
